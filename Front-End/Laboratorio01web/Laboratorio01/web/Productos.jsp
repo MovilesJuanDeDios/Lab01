@@ -15,10 +15,33 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         
+        <script src="js/utils.js" type="text/javascript"></script>
         <script src="js/script.js" type="text/javascript"></script>
         
     </head>
     <body>
+        
+         <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="myModalTitle">Modal Header</h4>
+                    </div>
+                    <div class="modal-body" id="myModalMessage">
+                        <p>This is a small modal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group height25" >
+            <div class="alert alert-success hiddenDiv" id="mesajeResult">
+                <strong id="mesajeResultNeg">Info!</strong> 
+                <span id="mesajeResultText">Este cuadro puede indicar acciones o cambios en la información</span>
+            </div>
+        </div>
+        
         <div class="container">  
             <br>
             <form class="form-inline">

@@ -6,8 +6,13 @@
 package laboratorio01.Controlador;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,65 +43,41 @@ public class ProductoServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             
             //String para guardar el JSON generaro por al libreria GSON
-            String json = "";
-            String json2 = "";
+            String json;
+            String json2;
+           
             //Se crea el objeto
             Producto p = new Producto();
             
             ServicioProducto sp = new ServicioProducto();
             
+            Thread.sleep(500);
+            
             String accion = request.getParameter("accion");
+            List<Double> listaCalculo = new ArrayList();
             switch (accion) {
-                case "consultarProductos":
-                    json = new Gson().toJson(sp.listarProducto());          
-                   // if (json instanceof String)
-                     //   System.out.println("wwwwwwwwww");
-       
-                    out.print(json);
-                    break;
-  
-                /*
-                case "consultarProductos":
-                    List<Producto> list = new ArrayList(sp.listarProducto());
-                    Gson gson = new Gson();
-                    JsonParser parser = new JsonParser();
-                    int porcent = 0;
-                    for (Producto prod : list) {
-                        
-                        switch(prod.getTipo()) {
-                            case "Canasta": 
-                                porcent = 5;
-                                break;
-                            case "Popular":
-                                porcent = 13;
-                                break;
-                            case "Suntuario":
-                                porcent = 15;
-                                break;
-                        }
-                        
-                        json = gson.toJson(prod, Producto.class);
-                           
-                        JsonElement jsonElement = parser.parse(json);
-                        JsonObject jsonObject = jsonElement.getAsJsonObject();
-                        jsonObject.addProperty("porcentaje", porcent);
-                        jsonObject.addProperty("impuesto", sp.impuesto(prod));
-                        jsonObject.addProperty("precioFinal", sp.totalPagar(prod));
-                        //json2 = jsonObject.toString();
-                        //System.out.println(json2);
                 
+                case "consultarProductos":
+                    
+                    List<Producto> list = new ArrayList(sp.listarProducto());
+                    for (Producto product : list) {
+                        
+                        listaCalculo.add(sp.impuesto(product));
+                        listaCalculo.add(sp.totalPagar(product));
+                        
                     }
-                    json = gson.toJson(list); 
-                  
+                    json = new Gson().toJson(list);   
+                    json2 = new Gson().toJson(listaCalculo);  
                     out.print(json);
                     break;
-                    */
-                case "Agregar":
+                    
+          case "agregar":
                     p.setCodigo(request.getParameter("codigo"));
                     p.setNombreProducto(request.getParameter("nombre"));
                     p.setPrecio(Double.parseDouble(request.getParameter("precio")));
                     p.setImportado(Integer.parseInt(request.getParameter("importado")));
                     p.setTipo(request.getParameter("tipo")); 
+                    
                     sp.insertarProducto(p);
                     
                     out.print("C~El objeto fue ingresado correctamente");
@@ -106,8 +87,15 @@ public class ProductoServlet extends HttpServlet {
                     String nombre = request.getParameter("nombre");
                     json = new Gson().toJson(sp.buscarProducto(nombre));
                     out.print(json);
-                    break;   
-                    
+                    break;
+                    /*
+                case "getImpuesto":
+                    request.set
+                    sp.impuesto(request.getParameter("rowData"));
+                    Double imp = Double.parseDouble(request.getParameter("impuesto");
+                    out.print();
+                break;
+                    */
                 default:
                     out.print("E~No se indicó la acción que se desea realizare");
                     break;
