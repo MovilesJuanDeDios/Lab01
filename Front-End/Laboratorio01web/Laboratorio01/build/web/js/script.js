@@ -145,6 +145,8 @@ function dibujarFila(rowData) {
             break;
     }
     
+    row.append($("<td>" + "json problem" + "</td>"));
+    row.append($("<td>" + "json problem" + "</td>"));
    
 }
 
